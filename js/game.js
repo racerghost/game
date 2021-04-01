@@ -8,6 +8,7 @@ class Game {
     this.techo.src = "images/techo.png";
     this.techoX=0;
     this.techoY=0;
+    this.nivel=1;
 
   }
  
@@ -29,16 +30,22 @@ class Game {
 _checkFloor(){
 
   this.world.forEach(floor=>{
-
     if (this.player.y+40>=floor.y && floor.y>=this.player.y){
-      console.log('es:',floor.floornum, this.piso,this.player.ang);
       this.piso=floor.floornum;
+      this.nivel=this.piso/2;
       return floor.floornum
-
     }
   })
 }
 
+_checkNivel(){
+  console.log(this.nivel);
+  if (this.nivel % 11 == 0){
+    this.world.moveInterval=this.world.moveInterval - 3;
+    this.world.forEach(floor => floor._moveForward());
+    this.nivel++;
+  }
+}
 
 
 
@@ -58,47 +65,50 @@ _checkCollision(){
     if (this.world[this.piso].floornum % 2 == 0){
       if (this.player.x<=this.world[this.piso].width){
         if (this.world[this.piso].y+30>=this.player.y) {
-            //estamos encima escalon            
+            //estamos encima escalon izq           
             this.player.y=this.world[this.piso].y;
             this.player.t=0;
             this.player.v=0;
-
+            
             }
           } else if (this.player.x>this.world[this.piso].width && this.player.x<this.world[this.piso].width+100){
-            console.log('Agujero detected');
+            //estamos en agujero
             this.player.t=this.player.t+0.1;
             this.player.v=-7;
             this.player.y=Math.ceil((this.player.y-((this.player.v*Math.sin(this.player.alpha))*this.player.t-(0.5)*this.player.g*this.player.t*this.player.t))/1)*1;
-            console.log('piso:',this.piso);
           } else if (this.player.x>=this.world[this.piso].x+100){
-            console.log('dcha');
+            //estamos encima escalon dcho
             if (this.world[this.piso].y+30>=this.player.y) {
               this.player.y=this.world[this.piso].y;
               this.player.t=0;
               this.player.v=0;
+              
             }
           }
         } else {
 
           if (this.player.x<=this.world[this.piso].width){
             if (this.world[this.piso].y+30>=this.player.y) {
-                //estamos encima escalon            
+                //estamos encima escalon  izq          
                 this.player.y=this.world[this.piso].y;
                 this.player.t=0;
                 this.player.v=0;
+                
                 }
               } else if (this.player.x>this.world[this.piso].width && this.player.x<this.world[this.piso].width+100){
-                console.log('Agujero detected');
+                //estamos en agujero
                 this.player.t=this.player.t+0.1;
                 this.player.v=-7;
                 this.player.y=Math.ceil((this.player.y-((this.player.v*Math.sin(this.player.alpha))*this.player.t-(0.5)*this.player.g*this.player.t*this.player.t))/1)*1;
                 console.log('piso:',this.piso);
               } else if (this.player.x>=this.world[this.piso].x+100){
+                //estamos encima escalon dcho
                 console.log('dcha');
                 if (this.world[this.piso].y+30>=this.player.y) {
                   this.player.y=this.world[this.piso].y;
                   this.player.t=0;
                   this.player.v=0;
+                  
                 }
               }
         }
@@ -106,25 +116,7 @@ _checkCollision(){
 
     
   }else{
-    // this.player.vivo=false;
-    // this.world=[];
-    // clearInterval(this.world.moveInterval);
-
     this._muertePorAplastamiento();
-    // this.piso=this.piso+2;
-    // if (this.world[this.piso].floornum % 2 == 0){
-    //   if (this.player.x<=this.world[this.piso].width){
-    //     if (this.world[this.piso].y+10>this.player.y && this.world[this.piso].y>this.player.y) {
-    //       this.player.y=this.world[this.piso].y;
-    //     }
-    //   }
-    // } else {
-    //   if (this.player.x>=this.world[this.piso].x){
-    //     if (this.world[this.piso].y+10>this.player.y && this.world[this.piso].y>this.player.y) {
-    //       this.player.y=this.world[this.piso].y;
-    //     }
-    //   }
-    // }
   } 
 
 }
@@ -150,12 +142,13 @@ _drawTecho(){
   }
 
   _clean(){
-    this.ctx.clearRect(0,0,750,500);
+    this.ctx.clearRect(0,0,500,500);
   }
   
   _update(){ 
  
     this._clean();
+    this._checkNivel();
     this._checkFloor();
     this._checkCollision();
     this.player._drawPlayer(this.ctx);

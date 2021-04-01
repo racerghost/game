@@ -14,8 +14,7 @@ for (let i=2;i<500;i++){
   world.push(
       new Floor({ x: 0, y: y, width: x, type:'orange',floornum:i}),
       new Floor({ x: x+100, y: y, width: 500-x-100,type:'orange',floornum:i}),
-  )
- 
+  ) 
   i++;
   
 }
