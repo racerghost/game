@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         <button id='play'>Play</button>
       </div>
       `; 
+      const playButton = document.querySelector('#play');
+      playButton.addEventListener('click', game.start());
   }
 
 generateSplashScreen();
 
-const playButton = document.querySelector('#play');
-playButton.addEventListener('click', game.start());
 
 });

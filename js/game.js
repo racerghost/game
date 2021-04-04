@@ -43,6 +43,7 @@ _checkNivel(){
   if (this.nivel % 11 == 0){
     this.world.moveInterval=this.world.moveInterval - 3;
     this.world.forEach(floor => floor._moveForward());
+    this.player.movement=this.player.movement+5;
     this.nivel++;
   }
 }
@@ -156,7 +157,7 @@ _drawTecho(){
     this.world.forEach(floor => floor._drawFloor(this.ctx));
     this._drawTecho();
     window.requestAnimationFrame(this._update.bind(this));
-  }
+  } 
 
 
   

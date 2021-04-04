@@ -17,24 +17,27 @@ class Player {
     this.img.src = "images/pou.png";
     this.explosion = new Image();
     this.explosion.src = "images/explosion.png";
+    this.movement=15
+    this.rightPressed = false;
+    this.leftPressed = false;
   } 
 
   moveRight(){
-    this.x = this.x + 15;
+    this.x = this.x + this.movement;
     this.ang=85;
     this._recalcAlpha();
   }
 
   moveLeft(){
-    this.x = this.x - 15;
+    this.x = this.x - this.movement;
     this.ang=95;
     this._recalcAlpha();
   }
 
   jump(){
-    this.v=60;
-    this.y=this.y-40;
-    console.log('hola')
+    // this.v=60;
+    // this.y=this.y-40;
+    // console.log('hola')
     // this.jumpInterval = setInterval(function(){
     //   this.y = this.y - 10;
     // }.bind(this), 100);
