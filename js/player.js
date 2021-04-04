@@ -17,31 +17,40 @@ class Player {
     this.img.src = "images/pou.png";
     this.explosion = new Image();
     this.explosion.src = "images/explosion.png";
-    this.movement=15
+    this.movement=3;
     this.rightPressed = false;
     this.leftPressed = false;
   } 
 
-  moveRight(){
-    this.x = this.x + this.movement;
-    this.ang=85;
-    this._recalcAlpha();
-  }
+  // moveRight(){
+  //   this.x = this.x + this.movement;
+  //   this.ang=85;
+  //   this._recalcAlpha();
+  // }
 
-  moveLeft(){
-    this.x = this.x - this.movement;
-    this.ang=95;
-    this._recalcAlpha();
-  }
+  // moveLeft(){
+  //   this.x = this.x - this.movement;
+  //   this.ang=95;
+  //   this._recalcAlpha();
+  // }
 
-  jump(){
-    // this.v=60;
-    // this.y=this.y-40;
-    // console.log('hola')
-    // this.jumpInterval = setInterval(function(){
-    //   this.y = this.y - 10;
-    // }.bind(this), 100);
-  }
+  _keyDownHandler=(key)=> {              //Pulso una tecla y miro cual es y asigno valor a su variable
+    if(key.code  == "ArrowRight") {
+      this.rightPressed = true;
+     }
+     else if(key.code == 'ArrowLeft') {
+       this.leftPressed = true;
+     } 
+   }
+ 
+   _keyUpHandler=(key)=>{                //suelto una tecla y miro cual es y asigno valor a su variable
+     if(key.code  == "ArrowRight") {
+       this.rightPressed = false;
+     }
+     else if(key.code == 'ArrowLeft') {
+       this.leftPressed = false;
+     }
+   }
 
   _recalcAlpha(){
     this.alpha=(2*this.ang/360)*Math.PI;  
@@ -49,6 +58,12 @@ class Player {
 
   _drawPlayer(ctx){
     if (this.vivo){
+      if(this.rightPressed) {
+        this.x = this.x + this.movement;
+      }else if(this.leftPressed) {
+        this.x = this.x - this.movement;
+      }
+
       ctx.drawImage(this.img,this.x-(this.ancho/2),this.y-this.alto+5,this.ancho,this.alto);
     } else {
       ctx.drawImage(this.explosion,-110,-30,720,500);

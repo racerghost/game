@@ -12,20 +12,20 @@ class Game {
 
   }
  
-  _assignControlsToKeys(){
-    document.addEventListener('keydown', (event) => {
-      switch (event.code) {
-        case 'ArrowRight':
-          this.player.moveRight();
-          break;
-        case 'ArrowLeft':
-          this.player.moveLeft();
-          break;
-        case 'ArrowUp':
-          this.player.jump();
-      }
-    });    
-}
+//   _assignControlsToKeys(){
+//     document.addEventListener('keydown', (event) => {
+//       switch (event.code) {
+//         case 'ArrowRight':
+//           this.player.moveRight();
+//           break;
+//         case 'ArrowLeft':
+//           this.player.moveLeft();
+//           break;
+//         case 'ArrowUp':
+//           this.player.jump();
+//       }
+//     });    
+// }
 
 _checkFloor(){
 
@@ -163,7 +163,9 @@ _drawTecho(){
   
   
   start(){
-    this._assignControlsToKeys();
+    // this._assignControlsToKeys();
+    document.addEventListener("keydown", this.player._keyDownHandler, false);
+    document.addEventListener("keyup", this.player._keyUpHandler, false);
     this.world.forEach(floor => floor._moveForward());
     window.requestAnimationFrame(this._update.bind(this));
   }
